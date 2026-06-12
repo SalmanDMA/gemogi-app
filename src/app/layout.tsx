@@ -13,10 +13,37 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  ),
   title: 'Gemogi - Digital Voucher & Top-Up Marketplace',
   description:
     'Temukan voucher game, streaming, dan pulsa dengan harga terbaik dan pemrosesan instan.',
   keywords: 'voucher, top up, game, streaming, pulsa, gemogi, blueprint',
+  openGraph: {
+    title: 'Gemogi - Digital Voucher & Top-Up Marketplace',
+    description:
+      'Temukan voucher game, streaming, dan pulsa dengan harga terbaik dan pemrosesan instan.',
+    url: './',
+    siteName: 'Gemogi',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 1200,
+        alt: 'Gemogi Logo',
+      },
+    ],
+    locale: 'id_ID',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gemogi - Digital Voucher & Top-Up Marketplace',
+    description:
+      'Temukan voucher game, streaming, dan pulsa dengan harga terbaik dan pemrosesan instan.',
+    images: ['/logo.png'],
+  },
 };
 
 export default function RootLayout({
