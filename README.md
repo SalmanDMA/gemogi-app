@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 Gemogi Blueprint Commerce Frontend
 
-## Getting Started
+A premium, high-performance digital voucher & top-up marketplace catalog dashboard built with Next.js 16. This interface focuses on providing a modern, smooth, and highly responsive UI/UX for buying and managing digital vouchers.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 💎 **Premium UI/UX** – Styled with a custom dark/light theme, modern typography (Inter), glassmorphism components, and custom CSS layout animations.
+- ⚡ **Dynamic Pagination** – Seamless "Load More" ("Muat Lebih Banyak") and "Show Less" ("Tampilkan Lebih Sedikit") pagination mechanics.
+- 🔍 **Debounced Search** – Custom debounce search hooks preventing unnecessary API requests while typing in the catalog search bar.
+- 🛍️ **Modal Checkouts & Centered Forms** – Vertically centered modals for checkout inputs, and clean styled forms for user registration and logins.
+- 💼 **Administrator Control** – In-card toggle switches to activate/deactivate products instantly, and custom CRUD dialog modals for creating or editing products.
+- 📞 **Dedicated Contact Page** – Fully validated "Hubungi Kami" page featuring automated message dispatching to the mock backend.
+- 🛡️ **End-to-End Type Safety** – Full TypeScript support combined with React Hook Form and Zod client validation.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Ant Design](https://ant.design/) & [Tailwind CSS](https://tailwindcss.com/)
+- **State Management:** [Zustand](https://zustand.demo.pmnd.rs/) (Auth, UI store) & [TanStack Query](https://tanstack.com/query) (React Query)
+- **Forms & Validation:** React Hook Form + Zod
+- **Icons:** Ant Design Icons
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites
 
-## Deploy on Vercel
+- Node.js 18+
+- npm / yarn / pnpm
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone & Install**
+
+   ```bash
+   git clone https://github.com/SalmanDMA/gemogi-frontend.git
+   cd gemogi-frontend
+   npm install
+   ```
+
+2. **Environment Setup**
+   _Create `.env` for local development or `.env.prod` for Railway production:_
+
+   ```bash
+   cp .env.example .env
+   # Set your NEXT_PUBLIC_API_URL to point to the backend API
+   ```
+
+3. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   _Open `http://localhost:3000` to view the catalog._
+
+---
+
+## 👨‍💻 About Me
+
+**Salman Dwi Maulana Akbar**  
+_Fullstack Developer_
+
+- 🌐 **Portfolio:** [bit.ly/my-portofolio-salmandma](https://bit.ly/my-portofolio-salmandma)
+- 💼 **LinkedIn:** [linkedin.com/in/salmandma](https://www.linkedin.com/in/salmandma/)
+- 🐙 **GitHub:** [github.com/SalmanDMA](https://github.com/SalmanDMA)
