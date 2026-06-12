@@ -1,66 +1,110 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import React, { useState } from 'react';
+import { HeroSection } from '../components/pages/home/hero-section';
+import { FilterBar } from '../components/pages/home/filter-bar';
+import { ProductGrid } from '../components/pages/home/product-grid';
+import { CheckoutModal } from '../components/modals/checkout-modal';
+import { ProductModal } from '../components/modals/product-modal';
+import { useProducts } from '../hooks/use-products';
+import { useDebounce } from '../hooks/use-debounce';
+import { useAuth } from '../hooks/use-auth';
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Product } from '../types/product';
 
 export default function Home() {
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
+  const [limit, setLimit] = useState(8);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const { user } = useAuth();
+  const debouncedSearch = useDebounce(search, 500);
+
+  const { products, meta, isPending } = useProducts({
+    search: debouncedSearch || undefined,
+    category: category || undefined,
+    page: 1,
+    limit,
+    includeInactive: user?.role === 'ADMIN' ? 'true' : undefined,
+  });
+
+  const handleSearchChange = (val: string) => {
+    setSearch(val);
+    setLimit(8);
+  };
+
+  const handleCategoryChange = (val: string) => {
+    setCategory(val);
+    setLimit(8);
+  };
+
+  const handleLoadMore = () => {
+    setLimit((prev) => prev + 8);
+  };
+
+  const handleShowLess = () => {
+    setLimit(8);
+  };
+
+  const handleCreateProduct = () => {
+    setSelectedProduct(null);
+    setModalOpen(true);
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="py-2">
+      <HeroSection />
+
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+        <div className="flex-1">
+          <FilterBar
+            search={search}
+            category={category}
+            onSearchChange={handleSearchChange}
+            onCategoryChange={handleCategoryChange}
+          />
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        {user?.role === 'ADMIN' && (
+          <div className="md:mb-8 self-end md:self-auto">
+            <Button
+              type="primary"
+              size="large"
+              icon={<PlusOutlined />}
+              onClick={handleCreateProduct}
+              className="bg-primary text-white dark:bg-primary-dark dark:text-slate-950 border-0 font-bold px-6 py-2.5 rounded-xl shadow-md cursor-pointer"
+              style={{ height: 48 }}
+            >
+              Tambah Produk Baru
+            </Button>
+          </div>
+        )}
+      </div>
+
+      <ProductGrid
+        products={products}
+        total={meta?.total ?? 0}
+        isPending={isPending}
+        onLoadMore={handleLoadMore}
+        onShowLess={handleShowLess}
+        onEdit={handleEditProduct}
+      />
+
+      <CheckoutModal />
+
+      <ProductModal
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        product={selectedProduct}
+      />
     </div>
   );
 }
